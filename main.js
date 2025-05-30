@@ -1,5 +1,5 @@
 // import "./driver.js"
 
-import { makeBoard } from "./board.js"
+import { board } from "./board.js"
 // import {}
-makeBoard()
+board()
