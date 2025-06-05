@@ -7,7 +7,7 @@ export function board() {
   let boardWidth = 3;
   let boardLength = 3;
   let defaultCellValue = 0;
-  
+
   const boardObject = makeBoard()
 
   function makeBoard() {
@@ -29,6 +29,7 @@ export function board() {
     const [x,y] = locationXY
     boardObject[x][y] = changeTo
   }
+  
 
   function changeCellNeighbors(targetCell){
     
