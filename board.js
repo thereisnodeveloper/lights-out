@@ -32,7 +32,7 @@ export function board() {
    */
   function changeBoardCell(locationXY, changeTo) {
     const [x, y] = locationXY;
-    boardObject[x][y] = changeTo;
+    boardObject[y][x] = changeTo;
   }
 
   /**
