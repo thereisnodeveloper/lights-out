@@ -24,8 +24,8 @@ export function board() {
 
     return boardToBe;
   }
+  console.log(makeBoard());
 
-  console.log(boardObject);
   /**
    * @param {Array} locationXY - coordinates in[x,y] form
    * @param {number} changeTo - what value to change cell to
@@ -50,13 +50,28 @@ export function board() {
     });
 
     neighborCoordinates.forEach((cell) => {
+      if(!isValidCoordinates(cell)) return
       changeBoardCell([cell[0], cell[1]], changeTo);
     });
   }
+  changeCellNeighbors([0, 1], neighborOffsets, 2);
 
+  function isValidCoordinates(cell) {
+    //coordinates outside board
+    //less than 0
+    //larger than largest coordinate in the board
+    //x
+    
+    const xMax = boardObject[0].length - 1;
+    //y
+    const yMax = boardObject.length - 1;
 
-  function checkValidCell() {
-    return;
+    if (cell[0] > xMax || cell[0] < 0) {
+      return false
+    } else if (cell[1] > yMax || cell[1] < 0) {
+      return false
+    }
+    return true
   }
 
   console.log(boardObject);
