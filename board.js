@@ -13,6 +13,7 @@ export function board() {
     [-1, 0],
     [1, 0],
   ];
+  let maxValue = 1;
 
   const boardObject = makeBoard();
 
@@ -28,11 +29,17 @@ export function board() {
 
   /**
    * @param {Array} locationXY - coordinates in[x,y] form
-   * @param {number} changeTo - what value to change cell to
    */
-  function changeBoardCell(locationXY, changeTo) {
+  function changeBoardCell(locationXY) {
+    let changeTo;
     const [x, y] = locationXY;
-    boardObject[y][x] = changeTo;
+    console.log(`x: ${x}, y:${y} cellvalue: ${boardObject[y][x]}`);
+    if (boardObject[y][x] >= maxValue) {
+      boardObject[y][x] = 0;
+    } else {
+      boardObject[y][x] += 1;
+    }
+    console.log('changed to:', boardObject[y][x]);
   }
 
   /**
@@ -41,38 +48,42 @@ export function board() {
    * @param {Array} neighborOffsets
    * @returns {Array}
    */
-  function changeCellNeighbors(targetLocationXY, neighborOffsets, changeTo) {
-    //for each cell, add coordinate adjustsments i.e. [0,1] to target cell location
+  function changeCellNeighbors(targetLocationXY, neighborOffsets) {
+    //for each cell, add coordinate adjustsments i.e. [0,1] to target cell
+    //location
+
     let neighborCoordinates = neighborOffsets.map((cell) => {
       cell[0] += targetLocationXY[0];
       cell[1] += targetLocationXY[1];
       return cell;
     });
-
+    
     neighborCoordinates.forEach((cell) => {
-      if(!isValidCoordinates(cell)) return
-      changeBoardCell([cell[0], cell[1]], changeTo);
+      if (!isValidCoordinates(cell)) {
+        console.log(`cell: ${cell}`,'not a valid cell');
+        return;
+      }
+      changeBoardCell([cell[0], cell[1]]);
     });
   }
-  changeCellNeighbors([0, 1], neighborOffsets, 2);
 
   function isValidCoordinates(cell) {
-    //coordinates outside board
-    //less than 0
-    //larger than largest coordinate in the board
-    //x
-    
-    const xMax = boardObject[0].length - 1;
-    //y
-    const yMax = boardObject.length - 1;
+    //check for any coordinates outside board
 
+    const xMax = boardObject[0].length - 1;
+    const yMax = boardObject.length - 1;
     if (cell[0] > xMax || cell[0] < 0) {
-      return false
+      return false;
     } else if (cell[1] > yMax || cell[1] < 0) {
-      return false
+      return false;
     }
-    return true
+    return true;
   }
+
+  //BUG: coordinates are shifting with each changeCellNeighbors()
+  changeCellNeighbors([0, 1], neighborOffsets);
+  console.log('boardObject:', boardObject)
+  changeCellNeighbors([0, 1], neighborOffsets);
 
   console.log(boardObject);
 }
