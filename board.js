@@ -6,16 +6,19 @@ export function board() {
   //CONFIG
   let boardWidth = 3;
   let boardLength = 3;
+  let defaultCellValue = 0;
+  
   const boardObject = makeBoard()
 
   function makeBoard() {
       const boardToBe = [];
       for (let index = 0; index < boardLength; index++) {
-      boardToBe.push(Array(boardWidth).fill(0));
+      boardToBe.push(Array(boardWidth).fill(defaultCellValue));
     }
    
     return boardToBe
   }
+  
   
   console.log( boardObject)
   /**
